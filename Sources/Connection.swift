@@ -75,11 +75,11 @@ open class Nats: NSObject, StreamDelegate {
 
 		for stream in [newReadStream, newWriteStream] {
 			stream.delegate = self
-			stream.schedule(in: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
+            stream.schedule(in: RunLoop.current, forMode: RunLoop.Mode.default)
 		}
 
 		// NSRunLoop
-		RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date.distantFuture as Date)
+        RunLoop.current.run(mode: RunLoop.Mode.default, before: Date.distantFuture as Date)
 	}
 
 	/**
@@ -208,7 +208,7 @@ open class Nats: NSObject, StreamDelegate {
 		var readStream: Unmanaged<CFReadStream>?
 		var writeStream: Unmanaged<CFWriteStream>?
 
-		CFStreamCreatePairWithSocketToHost(nil, host as CFString!, UInt32(port), &readStream, &writeStream) // -> send
+        CFStreamCreatePairWithSocketToHost(nil, host as CFString?, UInt32(port), &readStream, &writeStream) // -> send
 		inputStream = readStream!.takeRetainedValue()
 		outputStream = writeStream!.takeRetainedValue()
 
@@ -309,7 +309,7 @@ open class Nats: NSObject, StreamDelegate {
 
 			for stream in [newReadStream, newWriteStream] {
 				stream.delegate = nil
-				stream.remove(from: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
+                stream.remove(from: RunLoop.current, forMode: RunLoop.Mode.default)
 				stream.close()
 			}
 

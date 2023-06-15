@@ -21,7 +21,7 @@ public struct NatsSubscription {
 
 	func sub() -> String {
 		let group: () -> String = {
-			if self.queueGroup.characters.count > 0 {
+			if self.queueGroup.count > 0 {
 				return "\(self.queueGroup) "
 			}
 			return self.queueGroup
